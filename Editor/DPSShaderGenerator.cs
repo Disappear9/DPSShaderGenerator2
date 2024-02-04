@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 
 using System.Collections;
 using System.Collections.Generic;
@@ -178,7 +178,9 @@ namespace DPSGen
                 }
             }
 
-            string dpsCGincDirPath = Directory.GetParent(Path.GetDirectoryName(pathXSOrifice)) + "/CGInc";
+            string dpsCGincDirPath = Directory.GetParent(Path.GetDirectoryName(pathXSOrifice)) + "\\CGInc";
+            dpsCGincDirPath = "Assets" + dpsCGincDirPath.Substring(Application.dataPath.Length);
+            dpsCGincDirPath = dpsCGincDirPath.Replace("\\", "/");
             string path_xs_OD = null;
             string path_xs_PD = null;
             string path_xs_OVD = null;
@@ -216,7 +218,9 @@ namespace DPSGen
                 }
             }
 
-            string dpsPluginDirPath = Directory.GetParent(Path.GetDirectoryName(pathOrifice)) + "/Plugins";
+            string dpsPluginDirPath = Directory.GetParent(Path.GetDirectoryName(pathOrifice)) + "\\Plugins";
+            dpsPluginDirPath = "Assets" + dpsPluginDirPath.Substring(Application.dataPath.Length);
+            dpsPluginDirPath = dpsPluginDirPath.Replace("\\", "/");
             string path_DPS_func = null;
             log += "DPS_CGInc_Directory: " + dpsPluginDirPath + "\n";
             string[] guids4 = AssetDatabase.FindAssets("", new string[] { dpsPluginDirPath });
@@ -238,7 +242,9 @@ namespace DPSGen
                 return;
             }
             string selfpath = AssetDatabase.GUIDToAssetPath(selfguids[0]);
-            string outputPath = Directory.GetParent(Path.GetDirectoryName(selfpath)) + "/ShaderUTS";
+            string outputPath = Directory.GetParent(Path.GetDirectoryName(selfpath)) + "\\ShaderUTS";
+            outputPath = "Assets" + outputPath.Substring(Application.dataPath.Length);
+            outputPath = outputPath.Replace("\\", "/");
             log += "OutputPath: " + outputPath + "\n";
             Directory.CreateDirectory(outputPath);
 
@@ -469,7 +475,7 @@ namespace DPSGen
                 newAssets.Add(opath);
                 log += "Generated: " + opath + "\n";
             }
-            
+
             AssetDatabase.DeleteAsset(outputPath + "/OrificeDefines.cginc");
             AssetDatabase.CopyAsset(path_xs_OD, outputPath + "/OrificeDefines.cginc");
 
@@ -605,7 +611,7 @@ namespace DPSGen
                         writer.WriteLine("#include \"PenetratorDefines.cginc\"");
                         writer.WriteLine("#include \"PenetratorFunctions.cginc\"");
                     }
-                    
+
                     writer.WriteLine(lines[i]);
                 }
                 writer.Flush();
