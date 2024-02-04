@@ -855,7 +855,7 @@ namespace DPSGen
                         for (int j = 12; j <= 23; j++)
                             writer.WriteLine(xslines[j]);
                     }
-                    if (i == 208 || i == 240 || i == 267)
+                    if (i==184 || i == 208 || i == 240 || i == 267)
                     {
                         writer.WriteLine("#include \"OrificeDefines.cginc\"");
                         writer.WriteLine("#include \"OrificeFunctions.cginc\"");
@@ -886,7 +886,7 @@ namespace DPSGen
                         for (int j = 12; j <= 23; j++)
                             writer.WriteLine(xslines[j]);
                     }
-                    if (i == 208 || i == 240 || i == 267)
+                    if (i == 184 || i == 208 || i == 240 || i == 267)
                     {
                         writer.WriteLine("#include \"PenetratorDefines.cginc\"");
                         writer.WriteLine("#include \"PenetratorFunctions.cginc\"");
@@ -918,7 +918,7 @@ namespace DPSGen
                         for (int j = 12; j <= 23; j++)
                             writer.WriteLine(xslines[j]);
                     }
-                    if (i == 210 || i == 243 || i == 271)
+                    if (i == 186 || i == 210 || i == 243 || i == 271)
                     {
                         writer.WriteLine("#include \"OrificeDefines.cginc\"");
                         writer.WriteLine("#include \"OrificeFunctions.cginc\"");
@@ -949,7 +949,7 @@ namespace DPSGen
                         for (int j = 12; j <= 23; j++)
                             writer.WriteLine(xslines[j]);
                     }
-                    if (i == 210 || i == 243 || i == 271)
+                    if (i == 186 || i == 210 || i == 243 || i == 271)
                     {
                         writer.WriteLine("#include \"PenetratorDefines.cginc\"");
                         writer.WriteLine("#include \"PenetratorFunctions.cginc\"");
