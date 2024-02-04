@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 
 using System.Collections;
 using System.Collections.Generic;
@@ -138,6 +138,7 @@ namespace DPSGen
             string path_inc_com = null;
             string path_inc_comL = null;
             string path_inc_comB = null;
+            string path_inc_AudioLink = null;
             log += "WFDirectory: " + wfDirPath + "\n";
             string[] guids2 = AssetDatabase.FindAssets("WF_", new string[] { wfDirPath });
             foreach (string guid in guids2)
@@ -188,6 +189,11 @@ namespace DPSGen
                     path_inc_comB = sp;
                     log += "inc_commonB: " + sp + "\n";
                 }
+                if (path_inc_AudioLink == null && sp.EndsWith("/WF_UnToon_AudioLink.cginc"))
+                {
+                    path_inc_AudioLink = sp;
+                    log += "inc_AudioLink: " + sp + "\n";
+                }
             }
 
             string[] guids_sc = AssetDatabase.FindAssets("WF_ShaderCustomEditor t:Script");
@@ -203,7 +209,9 @@ namespace DPSGen
                 }
             }
 
-            string dpsCGincDirPath = Directory.GetParent(Path.GetDirectoryName(pathXSOrifice)) + "/CGInc";
+            string dpsCGincDirPath = Directory.GetParent(Path.GetDirectoryName(pathXSOrifice)) + "\\CGInc";
+            dpsCGincDirPath = "Assets" + dpsCGincDirPath.Substring(Application.dataPath.Length);
+            dpsCGincDirPath = dpsCGincDirPath.Replace("\\", "/");
             string path_xs_OD = null;
             string path_xs_PD = null;
             string path_xs_OVD = null;
@@ -241,7 +249,9 @@ namespace DPSGen
                 }
             }
 
-            string dpsPluginDirPath = Directory.GetParent(Path.GetDirectoryName(pathOrifice)) + "/Plugins";
+            string dpsPluginDirPath = Directory.GetParent(Path.GetDirectoryName(pathOrifice)) + "\\Plugins";
+            dpsPluginDirPath = "Assets" + dpsPluginDirPath.Substring(Application.dataPath.Length);
+            dpsPluginDirPath = dpsPluginDirPath.Replace("\\", "/");
             string path_DPS_func = null;
             log += "DPS_CGInc_Directory: " + dpsPluginDirPath + "\n";
             string[] guids4 = AssetDatabase.FindAssets("", new string[] { dpsPluginDirPath });
@@ -263,7 +273,9 @@ namespace DPSGen
                 return;
             }
             string selfpath = AssetDatabase.GUIDToAssetPath(selfguids[0]);
-            string outputPath = Directory.GetParent(Path.GetDirectoryName(selfpath)) + "/ShaderWF";
+            string outputPath = Directory.GetParent(Path.GetDirectoryName(selfpath)) + "\\ShaderWF";
+            outputPath = "Assets" + outputPath.Substring(Application.dataPath.Length);
+            outputPath = outputPath.Replace("\\", "/");
             log += "OutputPath: " + outputPath + "\n";
             Directory.CreateDirectory(outputPath);
 
@@ -293,6 +305,8 @@ namespace DPSGen
             AssetDatabase.DeleteAsset(outputPath + "/PenetratorDefines.cginc");
             AssetDatabase.CopyAsset(path_xs_PD, outputPath + "/PenetratorDefines.cginc");
 
+            AssetDatabase.DeleteAsset(outputPath + "/WF_UnToon_AudioLink.cginc");
+            AssetDatabase.CopyAsset(path_inc_AudioLink, outputPath + "/WF_UnToon_AudioLink.cginc");
 
             if (path_DPS_func != null)
             {
@@ -761,6 +775,8 @@ namespace DPSGen
             if (path_customEditor != null)
             {
                 string opath = Directory.GetParent(Path.GetDirectoryName(selfpath)) + "/Editor" + "/WF_ShaderCustomEditorDPS.cs";
+                opath = "Assets" + opath.Substring(Application.dataPath.Length);
+                opath = opath.Replace("\\", "/");
                 AssetDatabase.DeleteAsset(opath);
                 StreamWriter writer = new StreamWriter(opath);
                 string[] lines = File.ReadAllLines(path_customEditor);
